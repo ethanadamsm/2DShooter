@@ -7,7 +7,6 @@ black = 0, 0, 0
 screen = pygame.display.set_mode(size)
 map1 = gamemap.GameMap("maps/map1.txt")
 player = player.Player(200, 200, 20, 50, pygame.image.load("player.png")) 
-player.setVelX(1)
 
 def render():
 	screen.fill(black)
@@ -23,8 +22,17 @@ while True:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT: sys.exit()
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_e:
-				print("e")
+			if event.key == pygame.K_a:
+				player.setVelX(-1)
+			if event.key == pygame.K_d:
+				player.setVelX(1)
+			if event.key == pygame.K_w:
+				player.setVelY(-1)
+			if event.key == pygame.K_s:
+				player.setVelY(1)
 		if event.type == pygame.KEYUP:
-			print ("up")
+			if event.key == pygame.K_a or event.key == pygame.K_d:
+				player.setVelX(0)
+			if event.key == pygame.K_w or event.key == pygame.K_s:
+				player.setVelY(0)
 	update()
