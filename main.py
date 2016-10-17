@@ -6,7 +6,7 @@ size = width, height, = 600, 400
 black = 0, 0, 0
 screen = pygame.display.set_mode(size)
 map1 = gamemap.GameMap("maps/map1.txt")
-player = player.Player(200, 200, 20, 50, pygame.image.load("player.png")) 
+player = player.Player(200, 0, 20, 50, pygame.image.load("player.png")) 
 
 def render():
 	screen.fill(black)
@@ -15,7 +15,7 @@ def render():
 	pygame.display.flip()
 
 def update():
-	player.update()
+	player.update(map1)
 
 while True:
 	render()
