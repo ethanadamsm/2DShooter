@@ -10,6 +10,7 @@ class Character(object):
 		self.vy = 0.0
 		self.a = .04
 		self.image = image
+		self.frame = 1
 
 	def render(self, screen):
 		screen.blit(self.image, (self.x, self.y))
