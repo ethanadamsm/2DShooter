@@ -9,3 +9,12 @@ class Block(object):
 
 	def render(self, screen):
 		screen.blit(self.image, (self.x, self.y))
+
+	def getX(self):
+		return self.x
+
+	def getY(self):
+		return self.y
+
+	def getType(self):
+		return self.typee
