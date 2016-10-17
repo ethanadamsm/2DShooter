@@ -21,4 +21,7 @@ class Player(character.Character):
 		self.x += self.vx
 		self.y += self.vy
 
+	def jump(self):
+		self.y -= 20
+		self.vy = -3
 	
