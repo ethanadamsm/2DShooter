@@ -35,4 +35,6 @@ while True:
 				player.setVelX(0)
 			if event.key == pygame.K_w or event.key == pygame.K_s:
 				player.setVelY(0)
+			if event.key == pygame.K_SPACE:
+				player.jump()
 	update()
