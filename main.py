@@ -30,11 +30,11 @@ while True:
 				player.setVelY(-1)
 			if event.key == pygame.K_s:
 				player.setVelY(1)
+			if event.key == pygame.K_SPACE:
+				player.jump()
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_a or event.key == pygame.K_d:
 				player.setVelX(0)
 			if event.key == pygame.K_w or event.key == pygame.K_s:
 				player.setVelY(0)
-			if event.key == pygame.K_SPACE:
-				player.jump()
 	update()
