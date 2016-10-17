@@ -6,8 +6,9 @@ class Character(object):
 		self.y = y
 		self.w = w
 		self.h = h
-		self.vx = 0
-		self.vy = 0
+		self.vx = 0.0
+		self.vy = 0.0
+		self.a = .04
 		self.image = image
 
 	def render(self, screen):

@@ -33,3 +33,6 @@ class GameMap(object):
 
 	def update(self, screen):
 		print("update")
+
+	def getBlocks(self):
+		return self.blocks
