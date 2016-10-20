@@ -6,7 +6,10 @@ size = width, height, = 600, 400
 black = 0, 0, 0
 screen = pygame.display.set_mode(size)
 map1 = gamemap.GameMap("maps/map1.txt")
-player = player.Player(200, 0, 20, 50, pygame.image.load("player.png")) 
+player = player.Player(200, 0, 20, 40, pygame.image.load("player2unit.png")) 
+l = False
+r = False
+space = False
 
 def render():
 	screen.fill(black)
@@ -15,7 +18,7 @@ def render():
 	pygame.display.flip()
 
 def update():
-	player.update(map1)
+	player.update(map1, l, r, space)
 
 while True:
 	render()
@@ -24,17 +27,23 @@ while True:
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_a:
 				player.setVelX(-1)
+				l = True
 			if event.key == pygame.K_d:
 				player.setVelX(1)
-			if event.key == pygame.K_w:
-				player.setVelY(-1)
-			if event.key == pygame.K_s:
-				player.setVelY(1)
+				r = True
+			#if event.key == pygame.K_w:
+				#player.setVelY(-1)
+			#if event.key == pygame.K_s:
+				#player.setVelY(1)
 			if event.key == pygame.K_SPACE:
 				player.jump()
+				space = True
 		if event.type == pygame.KEYUP:
-			if event.key == pygame.K_a or event.key == pygame.K_d:
-				player.setVelX(0)
+			if event.key == pygame.K_a:
+				#player.setVelX(0)
+				l = False
+			if event.key == pygame.K_d:
+				r = False
 			if event.key == pygame.K_w or event.key == pygame.K_s:
 				player.setVelY(0)
 	update()
