@@ -26,10 +26,10 @@ while True:
 		if event.type == pygame.QUIT: sys.exit()
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_a:
-				player.setVelX(-1)
+				#player.setVelX(-1)
 				l = True
 			if event.key == pygame.K_d:
-				player.setVelX(1)
+				#player.setVelX(1)
 				r = True
 			#if event.key == pygame.K_w:
 				#player.setVelY(-1)
