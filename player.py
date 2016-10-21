@@ -41,9 +41,8 @@ class Player(character.Character):
 			if block.getY() > fb:
 				fb = block.getY()
 		if fl != "":
-			print fl
 			if self.x < fl + 20 and self.y + 40 > ft + 3 and l:
-				self.x = fl
+				self.x = fl + 3
 				self.vx = 0
 				print " fasdf"
 			elif self.x + 20 > fr and self.y + 40 > ft + 3 and r:
@@ -54,21 +53,36 @@ class Player(character.Character):
 				self.vy = 0
 
 	def update(self, map1, l, r, space):
+		if l:
+			self.x -= 1
+		elif r:
+			self.x += 1
+		oldy = self.y
+		self.y += 1
 		blocks = map1.getBlocks()
 		self.colblocks = []
 		for block in blocks:
 			if logic.Logic().getCollision(self.x, self.y, self.w, self.h, block.getX(), block.getY(), 20, 20):
 				if block.getType() != "0":
 					self.colblocks.append(block)
-		if self.getAccelerating():
-			self.vy += self.a
-		else:
-			self.vy = 0
-		self.clamp(l, r, space)
+		if len(self.colblocks) > 0:
+			self.y = oldy
+		oldx = self.x
 		if l:
 			self.x -= 1
 		if r:
 			self.x += 1
+		self.colblocks = []
+		for block in blocks:
+			if logic.Logic().getCollision(self.x, self.y, self.w, self.h, block.getX(), block.getY(), 20, 20):
+				if block.getType() != "0":
+					self.colblocks.append(block)
+		if len(self.colblocks) > 0:
+			self.x = oldx
+		if self.getAccelerating():
+			self.vy += self.a
+		else:
+			self.vy = 0
 		self.y += self.vy
 
 	def jump(self):
