@@ -53,12 +53,8 @@ class Player(character.Character):
 				self.vy = 0
 
 	def update(self, map1, l, r, space):
-		if l:
-			self.x -= 1
-		elif r:
-			self.x += 1
 		oldy = self.y
-		self.y += 1
+		self.y += self.vy
 		blocks = map1.getBlocks()
 		self.colblocks = []
 		for block in blocks:
@@ -67,6 +63,7 @@ class Player(character.Character):
 					self.colblocks.append(block)
 		if len(self.colblocks) > 0:
 			self.y = oldy
+			self.vy = 0
 		oldx = self.x
 		if l:
 			self.x -= 1
@@ -76,14 +73,15 @@ class Player(character.Character):
 		for block in blocks:
 			if logic.Logic().getCollision(self.x, self.y, self.w, self.h, block.getX(), block.getY(), 20, 20):
 				if block.getType() != "0":
-					self.colblocks.append(block)
+					if block.getY() < self.y + self.h:
+						print block
+						self.colblocks.append(block)
 		if len(self.colblocks) > 0:
 			self.x = oldx
 		if self.getAccelerating():
 			self.vy += self.a
 		else:
 			self.vy = 0
-		self.y += self.vy
 
 	def jump(self):
 		self.y -= 20
