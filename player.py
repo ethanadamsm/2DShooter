@@ -12,7 +12,7 @@ class Player(character.Character):
 				return False
 		return True
 
-	def update(self, map1, l, r, space):
+	def update(self, map1, l, r, space, click):
 		oldy = self.y
 		self.y += self.vy
 		self.blocks = map1.getBlocks()
@@ -50,6 +50,13 @@ class Player(character.Character):
 			self.y = 0
 			self.vy = 0
 
+	def render(self, screen):
+		screen.blit(self.image, (self.x, self.y))
+		self.inventory.render(screen)		
+
 	def jump(self):
 		self.vy = -3 
+
+	def addItem(self, item):
+		self.inventory.addItem(item)
 	
