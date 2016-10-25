@@ -1,4 +1,4 @@
-import sys, pygame
+import sys, pygame, inventory
 
 class Character(object):
 	def __init__(self, x, y, w, h, image):
@@ -11,6 +11,7 @@ class Character(object):
 		self.a = .04
 		self.image = image
 		self.frame = 1
+		self.inventory = inventory.Inventory()
 
 	def render(self, screen):
 		screen.blit(self.image, (self.x, self.y))
