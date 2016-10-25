@@ -3,61 +3,21 @@ import sys, pygame, character, logic
 class Player(character.Character):
 
 	def getAccelerating(self):
-		for colblock in self.colblocks:
-			if colblock.getType() != "0":
+		self.ablocks = []
+		for block in self.blocks:
+			if logic.Logic().getCollision(self.x, self.y + self.h, self.w, 2, block.getX(), block.getY(), 20, 20):
+				self.ablocks.append(block)
+		for block in self.ablocks:
+			if block.getType() != "0":
 				return False
 		return True
-
-	def clamp(self, l, r, space):
-		fl = ""
-		fr = ""
-		ft = ""
-		fb = ""
-		left = []
-		right = []
-		top = []
-		bottom = []
-		for block in self.colblocks:
-			if block.getX() < self.x:
-				left.append(block)
-			if block.getX() > self.x + 20:
-				right.append(block)
-			if block.getY() < self.y:
-				top.append(block)
-			if block.getY() > self.y + 50:
-				bottom.append(block)
-		if len(self.colblocks) > 0:
-			fl = self.colblocks[0].getX()
-			fr = self.colblocks[0].getX()
-			ft = self.colblocks[0].getY()
-			fb = self.colblocks[0].getY()
-		for block in self.colblocks:
-			if block.getX() > fl:
-				fl = block.getX()
-			if block.getX() < fr:
-				fr = block.getX()
-			if block.getY() < ft:
-				ft = block.getY()
-			if block.getY() > fb:
-				fb = block.getY()
-		if fl != "":
-			if self.x < fl + 20 and self.y + 40 > ft + 3 and l:
-				self.x = fl + 3
-				self.vx = 0
-				print " fasdf"
-			elif self.x + 20 > fr and self.y + 40 > ft + 3 and r:
-				self.x = fr
-				self.vx = 0
-			if self.y < fb:
-				self.y = fb - 39
-				self.vy = 0
 
 	def update(self, map1, l, r, space):
 		oldy = self.y
 		self.y += self.vy
-		blocks = map1.getBlocks()
+		self.blocks = map1.getBlocks()
 		self.colblocks = []
-		for block in blocks:
+		for block in self.blocks:
 			if logic.Logic().getCollision(self.x, self.y, self.w, self.h, block.getX(), block.getY(), 20, 20):
 				if block.getType() != "0":
 					self.colblocks.append(block)
@@ -70,20 +30,26 @@ class Player(character.Character):
 		if r:
 			self.x += 1
 		self.colblocks = []
-		for block in blocks:
+		for block in self.blocks:
 			if logic.Logic().getCollision(self.x, self.y, self.w, self.h, block.getX(), block.getY(), 20, 20):
 				if block.getType() != "0":
 					if block.getY() < self.y + self.h:
 						print block
 						self.colblocks.append(block)
 		if len(self.colblocks) > 0:
-			self.x = oldx
+			self.x = oldx 
 		if self.getAccelerating():
 			self.vy += self.a
 		else:
 			self.vy = 0
+		if self.x + self.w > 600:
+			self.x = 600 - self.w
+		if self.x < 0:
+			self.x = 0
+		if self.y < 0:
+			self.y = 0
+			self.vy = 0
 
 	def jump(self):
-		self.y -= 20
 		self.vy = -3 
 	
