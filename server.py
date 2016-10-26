@@ -1,13 +1,23 @@
-import socket
+import PodSixNet.Channel
+import PodSixNet.Server
+from time import sleep
+channels = []
+class ClientChannel(PodSixNet.Channel.Channel):
+	def Network(self, data):
+		print data
 
-s = socket.socket()
-host = socket.gethostname()
-port = 12345
-s.bind((host, port))
+class GameServer(PodSixNet.Server.Server):
+	channelClass = ClientChannel
 
-s.listen(5)
+	def Connected(self, channel, addr):
+		channels.append(channel)
+		channel.Send({"message": "hello"})
+
+print "Starting server on localhost"
+gameser = GameServer()
 while True:
-	c, addr = s.accept()
-	print 'Got connection from', addr
-	c.send('Thank you for connecting')
-	c.close()
+	gameser.Pump()
+	sleep(.01)
+	for channel in channels:
+		channel.Send({"message": "hello"})
+		print channel
