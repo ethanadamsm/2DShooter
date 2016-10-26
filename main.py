@@ -1,4 +1,4 @@
-import sys, pygame, gamemap, player, grenade
+import sys, pygame, gamemap, player, grenade, socket
 pygame.init()
 pygame.display.set_caption('2D Shooter')
 
@@ -12,6 +12,7 @@ l = False
 r = False
 space = False
 click = False
+clock = pygame.time.Clock()
 
 def render():
 	screen.fill(black)
@@ -20,6 +21,7 @@ def render():
 	pygame.display.flip()
 
 def update():
+	clock.tick()
 	player1.update(map1, l, r, space, click)
 
 while True:
