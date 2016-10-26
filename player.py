@@ -13,6 +13,7 @@ class Player(character.Character):
 		return True
 
 	def update(self, map1, l, r, space, click):
+		self.updateConnection()
 		oldy = self.y
 		self.y += self.vy
 		self.blocks = map1.getBlocks()
@@ -34,7 +35,6 @@ class Player(character.Character):
 			if logic.Logic().getCollision(self.x, self.y, self.w, self.h, block.getX(), block.getY(), 20, 20):
 				if block.getType() != "0":
 					if block.getY() < self.y + self.h:
-						print block
 						self.colblocks.append(block)
 		if len(self.colblocks) > 0:
 			self.x = oldx 
@@ -49,6 +49,7 @@ class Player(character.Character):
 		if self.y < 0:
 			self.y = 0
 			self.vy = 0
+		self.Send({"x": self.x, "y": self.y})
 
 	def render(self, screen):
 		screen.blit(self.image, (self.x, self.y))
