@@ -4,10 +4,13 @@ from time import sleep
 
 class MyPlayerListener(ConnectionListener):
 
-	def Network_numplayers(data):
+	def __init__(self, host, port):
+		self.Connect((host, port))
+
+	def Netword(self, data):
 		print data
 
-class Character(ConnectionListener):
+class Character(object):
 	def __init__(self, x, y, w, h, image):
 		self.x = x
 		self.y = y
@@ -19,16 +22,11 @@ class Character(ConnectionListener):
 		self.image = image
 		self.frame = 1
 		self.inventory = inventory.Inventory()
-		self.Connect()
-		self.gui = MyPlayerListener()
+		self.gui = MyPlayerListener('localhost', 1337)
 
 	def updateConnection(self):
 		connection.Pump()
 		self.gui.Pump()
-		self.Pump()
-
-	def Network(self, data):
-		print data
 
 	def render(self, screen):
 		screen.blit(self.image, (self.x, self.y))
