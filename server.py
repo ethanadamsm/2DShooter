@@ -1,8 +1,11 @@
-import PodSixNet.Channel
+import PodSixNet, time
+from time import sleep
+from PodSixNet.Channel import Channel
+from PodSixNet.Server import Server
 
 from time import sleep
 
-class ClientChannel(PodSixNet.Channel.Channel):
+class ClientChannel(Channel):
 	def Network(self, data):
 		print data
 
