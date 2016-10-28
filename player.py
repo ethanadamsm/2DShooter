@@ -49,7 +49,7 @@ class Player(character.Character):
 		if self.y < 0:
 			self.y = 0
 			self.vy = 0
-		self.Send({"x": self.x, "y": self.y})
+		self.gui.Send({"x": self.x, "y": self.y})
 
 	def render(self, screen):
 		screen.blit(self.image, (self.x, self.y))
