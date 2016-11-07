@@ -13,7 +13,6 @@ class Player(character.Character):
 		return True
 
 	def update(self, map1, l, r, space, click):
-		self.updateConnection()
 		oldy = self.y
 		self.y += self.vy
 		self.blocks = map1.getBlocks()
@@ -49,7 +48,6 @@ class Player(character.Character):
 		if self.y < 0:
 			self.y = 0
 			self.vy = 0
-		self.gui.Send({"x": self.x, "y": self.y})
 
 	def render(self, screen):
 		screen.blit(self.image, (self.x, self.y))

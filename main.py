@@ -12,7 +12,14 @@ l = False
 r = False
 space = False
 click = False
-clock = pygame.time.Clock()
+
+TCP_IP = '127.0.0.1'
+TCP_PORT = 62
+BUFFER_SIZE = 1024
+MESSAGE = "Hello, World!"
+ 
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((TCP_IP, TCP_PORT))
 
 def render():
 	screen.fill(black)
@@ -21,11 +28,14 @@ def render():
 	pygame.display.flip()
 
 def update():
-	clock.tick()
 	player1.update(map1, l, r, space, click)
 
 while True:
+	global s
 	render()
+	s.send(str(player1.getX()) + ", " + str(player1.getY()))
+	#data = s.recv(BUFFER_SIZE)
+	#print "received data:", data
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT: sys.exit()
 		if event.type == pygame.KEYDOWN:
@@ -51,3 +61,5 @@ while True:
 			if event.key == pygame.K_w or event.key == pygame.K_s:
 				player1.setVelY(0)
 	update()
+
+s.close()

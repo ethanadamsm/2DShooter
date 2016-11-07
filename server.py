@@ -1,26 +1,39 @@
-import PodSixNet, time
-from time import sleep
-from PodSixNet.Channel import Channel
-from PodSixNet.Server import Server
-
-from time import sleep
-
-class ClientChannel(Channel):
-	def Network(self, data):
-		print data
-
-class GameServer(Server):
-	channelClass = ClientChannel
-
-	def __init__(self, *args, **kwargs):
-		Server.__init__(self, *args, **kwargs)
-
-	def Connected(self, channel, addr):
-		channels.append(channel)
-		channel.Send({"message": "hello"})
-
-print "Starting server on localhost"
-gameser = GameServer(localaddr = ('localhost', 1337))
+import socket
+from threading import Thread
+from SocketServer import ThreadingMixIn
+ 
+class ClientThread(Thread):
+ 
+    def __init__(self,ip,port):
+        Thread.__init__(self)
+        self.ip = ip
+        self.port = port
+        print "[+] New thread started for "+ip+":"+str(port)
+ 
+ 
+    def run(self):
+        while True:
+            data = conn.recv(2048)
+            if not data: break
+            print "received data:", data
+ 
+TCP_IP = '0.0.0.0'
+TCP_PORT = 62
+BUFFER_SIZE = 20  # Normally 1024, but we want fast response
+ 
+ 
+tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+tcpsock.bind((TCP_IP, TCP_PORT))
+threads = []
+ 
 while True:
-	gameser.Pump()
-	sleep(.01)
+    tcpsock.listen(4)
+    print "Waiting for incoming connections..."
+    (conn, (ip,port)) = tcpsock.accept()
+    newthread = ClientThread(ip,port)
+    newthread.start()
+    threads.append(newthread)
+ 
+for t in threads:
+    t.join()

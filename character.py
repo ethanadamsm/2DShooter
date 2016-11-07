@@ -1,14 +1,5 @@
 import sys, pygame, inventory
-from PodSixNet.Connection import ConnectionListener, connection
 from time import sleep
-
-class MyPlayerListener(ConnectionListener):
-
-	def __init__(self, host, port):
-		self.Connect((host, port))
-
-	def Netword(self, data):
-		print data
 
 class Character(object):
 	def __init__(self, x, y, w, h, image):
@@ -22,11 +13,6 @@ class Character(object):
 		self.image = image
 		self.frame = 1
 		self.inventory = inventory.Inventory()
-		self.gui = MyPlayerListener('localhost', 1337)
-
-	def updateConnection(self):
-		connection.Pump()
-		self.gui.Pump()
 
 	def render(self, screen):
 		screen.blit(self.image, (self.x, self.y))
